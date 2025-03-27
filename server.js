@@ -1,19 +1,18 @@
 require("dotenv").config();
+const PORT = process.env.PORT || 5001;
 const express = require("express");
-const mongoose = require("mongoose");
+
 const bookRoutes = require("./routes/books");
 
 const app = express();
+
+// import db
+const connectDB = require('./config/db')
+
+connectDB()
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("🔥 MongoDB Connected"))
-  .catch(err => {
-    console.error("❌ MongoDB Connection Error:", err.message);
-    process.exit(1);
-  });
-
+//Routes
 app.use("/books", bookRoutes);
 
-const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
