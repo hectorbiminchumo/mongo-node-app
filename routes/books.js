@@ -29,6 +29,7 @@ router.get("/search", async (req, res) => {
 router.get("/count-by-category", async (req, res) => {
   try {
     const result = await Book.aggregate([
+    //  { $match: { category: "Art" } },
       { $group: { _id: "$category", totalBooks: { $sum: 1 } } }
     ]);
     res.json(result);
